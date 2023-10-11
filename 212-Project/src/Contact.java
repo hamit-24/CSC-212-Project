@@ -7,6 +7,9 @@ public class Contact implements Comparable<String> {
 	private String email;
 	private String BD;
 	private String note;
+	public Event eventForContact;
+	public LinkedList<Event> events = new LinkedList<Event>();
+	
 	
 	public Contact() {
 		name = pNumber = address = email = BD = note = null;
@@ -96,10 +99,14 @@ public class Contact implements Comparable<String> {
 		System.out.println("Address:" +address);
 		System.out.println("Birthday:" +BD);
 		System.out.println("Notes:" +note);
+		System.out.println("");
 
 	}
 //	public void main(String []args) {
 //		readContact();
 //	}
+	public LinkedList<Event> getEvents() {
+		return events;
+	}
 
 }

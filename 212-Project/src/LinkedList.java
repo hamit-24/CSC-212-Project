@@ -72,7 +72,7 @@ public class LinkedList <T>{
 		}
 	}
 	public void addSorted(T x) {
-		Node<T> temp = new Node(x);
+		Node<T> temp = new Node<T>(x);
 		if(head == null) {
 			head = temp;
 			current = temp;
@@ -82,18 +82,18 @@ public class LinkedList <T>{
 				head = temp;
 				current = temp;
 			}else {
-				Node<T> temp2 = head, temp3=null;
-				while(temp2!= null && (((Contact)temp2.data).compareTo((Contact)x)<=0)){
-					temp3 = temp2;
-					temp2 = temp2.next;
+				Node<T> front = head, back=null;
+				while(front!= null && (((Contact)front.data).compareTo((Contact)x)<=0)){
+					back = front;
+					front = front.next;
 				}
-				temp3.next = temp;
-				temp.next = temp2;
+				back.next = temp;
+				temp.next = front;
 			}
 		}
 	}
-	public static void main(String[] args) {
-		
-	}
+//	public static void main(String[] args) {
+//		
+//	}
 
 }
