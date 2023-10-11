@@ -1,6 +1,8 @@
 import java.util.*;
-public class Contact implements Comparable<String> {
+public class Contact implements Comparable<Contact> {
 
+	private String Firstname;
+	private String Lastname;
 	private String name;
 	private String pNumber;
 	private String address;
@@ -8,22 +10,39 @@ public class Contact implements Comparable<String> {
 	private String BD;
 	private String note;
 	public Event eventForContact;
-	public LinkedList<Event> events = new LinkedList<Event>();
+//	public LinkedList<Event> events = new LinkedList<Event>();
 	
 	
 	public Contact() {
-		name = pNumber = address = email = BD = note = null;
+		Firstname = Lastname =name= pNumber = address = email = BD = note = null;
+		eventForContact = null;
 	}
-	public Contact(String name, String pNumber, String address, String email, String bD, String note) {
-		this.name = name;
+	// ماتوقع نحتاجه
+	public Contact(String Firstname,String Lastname, String pNumber, String address, String email, String bD, String note) {
+		this.Firstname = Firstname;
+		this.Lastname = Lastname;
+		this.name = Firstname+" "+Lastname;
 		this.pNumber = pNumber;
 		this.address = address;
 		this.email = email;
-		BD = bD;
+		this.BD = bD;
 		this.note = note;
 	}
+	public Event getEventForContact() {
+		return eventForContact;
+	}
+	public void setEventForContact(Event eventForContact) {
+		this.eventForContact = eventForContact;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public Contact(Contact con) {
-		this.name = con.name;
+		this.Firstname = con.Firstname;
+		this.Lastname = con.Lastname;
 		this.pNumber = con.pNumber;
 		this.address = con.address;
 		this.email = con.email;
@@ -32,11 +51,11 @@ public class Contact implements Comparable<String> {
 		}
 
 	
-	public String getname() {
-		return name;
+	public String getFirstname() {
+		return Firstname;
 	}
-	public void setname(String contactname) {
-		this.name = contactname;
+	public void setFirstname(String contactFirstname) {
+		this.Firstname = contactFirstname;
 	}
 	public String getpNumber() {
 		return pNumber;
@@ -69,16 +88,18 @@ public class Contact implements Comparable<String> {
 		this.note = note;
 	}
 	@Override
-	public int compareTo(String name) {
-		return this.name.compareTo(name);
-	}
+//	public int compareTo(String Firstname) {
+//		return this.Firstname.compareTo(Firstname);
+//	}
 	public int compareTo(Contact o) {
-		return name.compareTo(o.name);
+		return Firstname.compareTo(o.Firstname);
 	}
 	public void readContact() {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Enter the contact's name:");
-		this.name =input.next();
+		this.Firstname =input.next();
+		this.Lastname= input.next();
+		this.name = Firstname+" "+Lastname;
 		System.out.println("Enter the contact's phone number:");
 		this.pNumber= input.next();
 		System.out.println("Enter the contact's email address:");
@@ -89,7 +110,19 @@ public class Contact implements Comparable<String> {
 		this.BD = input.next();
 		System.out.println("Enter any notes for the contact");
 		this.note = input.next();
-		input.close();
+		
+		
+	}
+	@Override
+	public String toString() {
+		System.out.println("name:" +name);
+		System.out.println("Phone Number:" +pNumber);
+		System.out.println("Email Address:" + email);
+		System.out.println("Address:" +address);
+		System.out.println("Birthday:" +BD);
+		System.out.println("Notes:" +note);
+//		System.out.println("");
+		return "--------------------";
 		
 	}
 	public void display() {
@@ -102,11 +135,14 @@ public class Contact implements Comparable<String> {
 		System.out.println("");
 
 	}
-//	public void main(String []args) {
-//		readContact();
-//	}
-	public LinkedList<Event> getEvents() {
-		return events;
+public String getLastname() {
+		return Lastname;
 	}
+	public void setLastname(String lastname) {
+		Lastname = lastname;
+	}
+//	public LinkedList<Event> getEvents() {
+//		return events;
+//	}
 
 }

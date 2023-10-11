@@ -1,4 +1,4 @@
-
+import java.util.*;
 public class Event {
 	
 	private String title;
@@ -7,8 +7,12 @@ public class Event {
 	private String time;
 	private String contactName;
 	private Contact conInEvent;
-	public LinkedList<Contact> eventWithContact = new LinkedList<Contact>();
-	public LinkedList<Event> eventInEvent = new LinkedList<Event>();
+//	public LinkedList<Contact> eventWithContact = new LinkedList<Contact>();
+//	public LinkedList<Event> eventInEvent = new LinkedList<Event>();
+	public Event() {
+		title = location = date =time = contactName =null;
+		conInEvent =null; 
+	}
 	
 	public Event(String title, String location, String date, String time, String contactName) {
 		this.title = title;
@@ -71,14 +75,27 @@ public class Event {
 		return "Event [title=" + title + ", location=" + location + ", date=" + date + ", time=" + time
 				+ ", contactName=" + contactName + "]";
 	}
-
-	public LinkedList<Contact> getEventWithContact() {
-		return eventWithContact;
+	public void readEvent() {
+		Scanner input = new Scanner(System.in);
+		System.out.print("Enter event title: ");
+		this.title = input.next();
+		System.out.print("Enter Contact's name: ");
+		this.contactName= input.next();
+		System.out.print("Enter event date & time: ");
+		this.date = input.next();
+		this.time = input.next();
+		System.out.print("Enter event location: ");
+		this.location = input.next();
 	}
+	
 
-	public LinkedList<Event> getEventInEvent() {
-		return eventInEvent;
-	}
+//	public LinkedList<Contact> getEventWithContact() {
+//		return eventWithContact;
+//	}
+//
+//	public LinkedList<Event> getEventInEvent() {
+//		return eventInEvent;
+//	}
 	
 	
 
