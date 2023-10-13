@@ -1,5 +1,5 @@
 import java.util.*;
-public class Event {
+public class Event implements Comparable <Event>{
 	
 	private String title;
 	private String location;
@@ -72,22 +72,33 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return "Event [title=" + title + ", location=" + location + ", date=" + date + ", time=" + time
-				+ ", contactName=" + contactName + "]";
+		System.out.println("Event title: "+ title);
+		System.out.println("Contact name: "+ contactName);
+		System.out.println("Event date and time(dd/mm/yyyy hh:mm): "+ date + " "+ time);
+		System.out.println("Event location: "+ location);
+		return "--------------------";
 	}
 	public void readEvent() {
 		Scanner input = new Scanner(System.in);
 		System.out.print("Enter event title: ");
-		this.title = input.next();
+		this.title = input.nextLine();
 		System.out.print("Enter Contact's name: ");
-		this.contactName= input.next();
+		this.contactName= input.nextLine();
 		System.out.print("Enter event date & time: ");
 		this.date = input.next();
 		this.time = input.next();
 		System.out.print("Enter event location: ");
-		this.location = input.next();
+		input.nextLine();//garbage
+		this.location = input.nextLine();
 	}
-	
+
+	@Override
+	public int compareTo(Event o) {
+		return this.date.compareTo(o.date);
+	}
+	public int compareTo(String time) {
+		return this.time.compareTo(time);
+	}
 
 //	public LinkedList<Contact> getEventWithContact() {
 //		return eventWithContact;

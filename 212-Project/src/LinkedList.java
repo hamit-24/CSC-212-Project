@@ -1,5 +1,5 @@
 
-public class LinkedList <T>{
+public class LinkedList <T extends Comparable<T>> {
 	private Node<T> head;
 	private Node<T> current;
 	
@@ -25,6 +25,8 @@ public class LinkedList <T>{
 		current.data=d;
 	}
 	public T retrive() {
+		if(current==null)
+			return null;
 		return current.data;
 	}
 	public void insert(T d) {
@@ -72,29 +74,64 @@ public class LinkedList <T>{
 			temp=temp.next;
 		}
 	}
+//	public void addSorted(T x) {
+//		Node<T> temp = new Node<T>(x);
+//		if(head == null) {
+//			head = temp;
+//			current = temp;
+//		}else {
+//			if(x instanceof Contact) {
+//			if(((Contact)x).compareTo((Contact)head.data)<0){
+//				temp.next = head;
+//				head = temp;
+//				current = temp;
+//			}else {
+//				Node<T> front = head, back=null;
+//				while(front!= null && (((Contact)front.data).compareTo((Contact)x)<=0)){
+//					back = front;
+//					front = front.next;
+//				}
+//				back.next = temp;
+//				temp.next = front;
+//			}
+//		}
+//			}
+//	}
 	public void addSorted(T x) {
 		Node<T> temp = new Node<T>(x);
 		if(head == null) {
 			head = temp;
 			current = temp;
 		}else {
-			if(((Contact)x).compareTo((Contact)head.data)<0){
-				temp.next = head;
-				head = temp;
-				current = temp;
+			if(x instanceof Event) {
+				if(((Event)(x)).getTitle().compareTo(((Event)head.data).getTitle())<0){
+					temp.next = head;
+					head = temp;
+					current = temp;
+				}else {
+					Node<T> front = head, back=null;
+					while(front!= null && (((Event)(front.data)).getTitle().compareTo(((Event)x).getTitle())<=0)){
+						back = front;
+						front = front.next;
+					}
+					back.next = temp;
+					temp.next = front;
+				}	
 			}else {
-				Node<T> front = head, back=null;
-				while(front!= null && (((Contact)front.data).compareTo((Contact)x)<=0)){
-					back = front;
-					front = front.next;
-				}
-				back.next = temp;
-				temp.next = front;
-			}
-		}
+				if(((Contact)(x)).getName().compareTo(((Contact)head.data).getName())<0){
+					temp.next = head;
+					head = temp;
+					current = temp;
+				}else {
+					Node<T> front = head, back=null;
+					while(front!= null && ((front.data).compareTo(x)<=0)){
+						back = front;
+						front = front.next;
+					}
+					back.next = temp;
+					temp.next = front;
+			    }
+	        }
+	    }
 	}
-//	public static void main(String[] args) {
-//		
-//	}
-
 }

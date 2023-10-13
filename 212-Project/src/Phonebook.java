@@ -1,7 +1,7 @@
 
 public class Phonebook {
-	static LinkedList<Contact> contacts;
-	static LinkedList<Event> events;
+	LinkedList<Contact> contacts;
+    LinkedList<Event> events;
 	public Phonebook() {
 		contacts = new LinkedList<Contact>();
 		events = new LinkedList<Event>();
@@ -37,8 +37,8 @@ public class Phonebook {
 //		boolean founded = search(c);
 		if(!search(c)) {
 			contacts.addSorted(c);
-			System.out.println("Contact added");
-			System.out.println("");
+			System.out.println("- Contact added successfully");
+			System.out.println("--------------------");
 			return;	
 		}else {
 		System.out.println("-There is a contact with tha same name or phone number");
@@ -60,6 +60,7 @@ public class Phonebook {
 		contacts.findFirst();
 		while(!contacts.last()) {
 			if(contacts.retrive().getName().equalsIgnoreCase(name)) {
+				deletEvent(name);
 				contacts.remove();
 				System.out.println("Contact "+name+" deleted");
 				System.out.println("--------------------");
@@ -68,6 +69,7 @@ public class Phonebook {
 			contacts.findNext();
 		}
 		if(contacts.retrive().getName().equalsIgnoreCase(name)) {
+			deletEvent(name);
 			contacts.remove();
 			System.out.println("Contact "+name+" deleted");
 			System.out.println("--------------------");
@@ -76,6 +78,23 @@ public class Phonebook {
 			System.out.println("Contact doesn't exist, you can't delet");
 		}
 	}
+	public void deletEvent(String name) {
+		if(events.isEmpty())
+			return;
+		events.findFirst();
+		while(!events.last()) {
+			if(events.retrive().getContactName().equalsIgnoreCase(name)) {
+				events.remove();
+				return;
+			}
+			events.findNext();
+		}
+		if(events.retrive().getContactName().equalsIgnoreCase(name)) {
+			events.remove();
+			return;
+		}
+	}
+	
 	public Contact searchByFirstName(String fname) {
 		if(contacts.isEmpty())
 			return null;
@@ -89,10 +108,6 @@ public class Phonebook {
 			return contacts.retrive();
 		return null;
 	}
-	
-	
-	
-	
 	public Contact searchByName(String name) {
 		if(contacts.isEmpty())
 			return null;
@@ -134,7 +149,6 @@ public class Phonebook {
 		return samefname;
 		
 	}
-
 	public LinkedList<Contact> searchByEmail(String e){
 		LinkedList<Contact> samemail = new LinkedList<Contact>();
 		if(contacts.isEmpty()) 
@@ -179,7 +193,7 @@ public class Phonebook {
 			sameBD.insert(contacts.retrive());
 		return sameBD;
 	}
-	public static void allContactsInPB(Phonebook ph) {
+	public void allContactsInPB(Phonebook ph) {
 		if(ph.contacts.isEmpty())
 			System.out.println("The phonebook is empty");
 		ph.contacts.findFirst();
@@ -189,7 +203,7 @@ public class Phonebook {
 		}
 		ph.contacts.retrive().display();
 	}
-	public static void allContactsInLL(LinkedList<Contact> l) {
+	public void allContactsInLL(LinkedList<Contact> l) {
 		if(l.isEmpty())
 			System.out.println("Empty list");
 		l.findFirst();
@@ -199,7 +213,7 @@ public class Phonebook {
 		}
 		l.retrive().display();
 	}
-	public static void allContactsByName(LinkedList<Contact> l) {
+	public void allContactsByName(LinkedList<Contact> l) {
 		if(l.isEmpty())
 			System.out.println("List is empty");
 		l.findFirst();
@@ -258,13 +272,26 @@ public class Phonebook {
 	}
 	
 	public void addEvent(Event e) {
-		if(!isConflict(e, searchByName(e.getContactName()))) {
+		Contact c = searchByName(e.getContactName());
+		if(!isConflict(e, c)) {
 			events.addSorted(e);
-			System.out.println("Event scheduled successfully!");
-			System.out.println("--------------------");
-		}else {
-			System.out.println("There is an event with same date & time!");
-			System.out.println("--------------------");
+			e.setConInEvent(c);
+			contacts.findFirst();
+			while(!contacts.last()) {
+				if(contacts.retrive().compareTo(c)==0) {
+					contacts.retrive().setEventForContact(e);
+					System.out.println("Event scheduled successfully!");
+					System.out.println("--------------------");
+					return;
+				}
+				contacts.findNext();
+			}
+			if(contacts.retrive().compareTo(c)==0) {
+				contacts.retrive().setEventForContact(e);
+			    System.out.println("Event scheduled successfully!");
+			    System.out.println("--------------------");
+			return;
+			}
 		}
 			
 	}
@@ -306,9 +333,40 @@ public class Phonebook {
 //		return false;
 //	}
 	public boolean isConflict(Event e, Contact c) {
-		if(c.eventForContact.getTime().compareTo(e.getTime())!=0&&c.eventForContact.getDate().compareTo(e.getDate())!=0)
+		if(c == null) {
+			System.out.println("there is no contact with this name");
+			System.out.println("--------------------");
+			return true;
+		}
+		if(c.hasEvent()) {
+			System.out.println("The contact already has an event");
+			System.out.println("--------------------");
+			return true;
+		}else {
+			if(events.isEmpty())
+				return false;
+			events.findFirst();
+			while(!events.last()) {
+				if(events.retrive().getDate().compareToIgnoreCase(e.getDate())==0
+						&&events.retrive().getTime().compareTo(e.getTime())==0) {
+					System.out.println("There is an event with same date & time!");
+					System.out.println("--------------------");	
+					return true;
+				}
+				events.findNext();
+			}
+//			if(c.eventForContact.getTime().compareTo(e.getTime())!=0&&c.eventForContact.getDate().compareTo(e.getDate())!=0)
+//				return false;
+			if(events.retrive().getDate().compareToIgnoreCase(e.getDate())==0
+					&&events.retrive().getTime().compareTo(e.getTime())==0) {
+				System.out.println("There is an event with same date & time!");
+				System.out.println("--------------------");	
+				return true;
+			}
+				// this method checked if there is an event with same time and date 
 			return false;
-		return true;
+		}
+		
 	}
 //	public void scheduleEvent(Event e, String cName) {
 //		Contact c = searchByName(cName);
