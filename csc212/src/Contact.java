@@ -98,10 +98,13 @@ public class Contact implements Comparable<Contact> {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Enter the contact's name:");
 		this.name = input.nextLine();
+		this.name=name.toLowerCase();
         String[] parts = name.split(" ");    // Split the full name using a space as the delimiter.
         if (parts.length >= 2)  // Check if there are at least two parts (first name and last name)
         	Firstname = parts[0]; // The first name is the first part (index 0)
-  
+        else
+        	Firstname=name;
+       
 		System.out.println("Enter the contact's phone number:");
 		this.pNumber= input.nextLine();
 		System.out.println("Enter the contact's email address:");

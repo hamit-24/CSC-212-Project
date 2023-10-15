@@ -37,7 +37,7 @@ public class test {
             
                 case 1:   //add Contact
                 	
-                    ph.addContactByRead();                    
+                    ph.addContact();                    
                     break;
                     
                 case 2:  // search 
@@ -55,13 +55,13 @@ public class test {
                 		 crit = input.nextInt();
                 		 
                      } catch (Exception e) {
-                         System.out.println("Invalid input. Please enter a valid option.");
+                         System.out.println("-Invalid input. Please enter a valid option.");
                          System.out.println("--------------------");
                          input.nextLine(); // Consume the invalid input
                          continue;
                      }
                 	 if(crit<1||crit>5) {
-                		 System.out.println("Please choose 1-5");
+                		 System.out.println("-Please choose 1-5");
                 	     System.out.println("--------------------");
                 	 }
                 	}while(crit<1||crit>5);
@@ -242,7 +242,12 @@ public class test {
                     break;
                     
                 case 7:  //  printing events alphabetically
-                	ph.events.display();                   
+                	if(ph.events.isEmpty()) {
+                		System.out.println("-There are no events");
+                		System.out.println("--------------------");
+                	}
+                	else
+                		ph.events.display();                   
                     break;
                     
                 case 8:

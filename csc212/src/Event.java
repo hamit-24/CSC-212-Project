@@ -77,6 +77,7 @@ public class Event implements Comparable <Event>{
 		Scanner input = new Scanner(System.in);
 		System.out.print("Enter event title: ");
 		this.title = input.nextLine();
+		this.title=title.toLowerCase();
 		System.out.print("Enter Contact's name: ");
 		this.contactName= input.nextLine();
 		System.out.print("Enter Event date and time(dd/mm/yyyy hh:mm): ");

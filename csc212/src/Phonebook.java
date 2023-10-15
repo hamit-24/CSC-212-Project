@@ -26,7 +26,10 @@ public class Phonebook {
 		return false;
 	}
 	
-	public void addContact(Contact c) {
+	public void addContact() {
+		Contact c = new Contact();
+		c.readContact();
+		
 		
 		if(!search(c)) {
 			contacts.addSorted(c);
@@ -39,12 +42,6 @@ public class Phonebook {
 		System.out.println("--------------------");
 		   }
 		}
-	
-	public void addContactByRead() {
-		Contact c = new Contact();
-		c.readContact();
-		addContact(c);
-	}
 	
 	public void deleteContact(String name) {
 		
@@ -148,6 +145,8 @@ public class Phonebook {
 	
 	public LinkedList<Contact> searchByFirsName(String fname){
 		
+		fname=fname.toLowerCase();
+		
 		LinkedList<Contact> samefname = new LinkedList<Contact>();
 		if(contacts.isEmpty())
 			return null;
@@ -158,9 +157,12 @@ public class Phonebook {
 				samefname.insert(contacts.retrive());
 			contacts.findNext();
 		}
-		if(contacts.retrive().getFirstname().equalsIgnoreCase(fname))
+		if(contacts.retrive().getFirstname().equalsIgnoreCase(fname)) 
 			samefname.insert(contacts.retrive());
+		
 		return samefname;
+		
+		
 		
 	}
 	
@@ -168,7 +170,7 @@ public class Phonebook {
 		
 		LinkedList<Contact> sameEmail = new LinkedList<Contact>();
 		if(contacts.isEmpty()) 
-			return sameEmail;
+			return null;
 		
 		contacts.findFirst();
 		while(!contacts.last()) {
@@ -244,9 +246,9 @@ public class Phonebook {
 	public void addEvent() {
 		Event e = new Event();
 	    e.readEvent();		 
-		e.setConInEvent(searchByName(e.getContactName()));	// sets Event's contact. 
+	    Contact c = searchByName(e.getContactName());
+		e.setConInEvent(c);	// sets Event's contact. 
 		
-		Contact c = searchByName(e.getContactName());
 		if(!isConflict(e, c)) {
 			events.addSorted(e);
 			e.setConInEvent(c);
@@ -289,7 +291,7 @@ public class Phonebook {
 			
 			events.findFirst();
 			while(!events.last()) {
-				if(events.retrive().getDate().compareToIgnoreCase(e.getDate())==0
+				if(events.retrive().getDate().compareTo(e.getDate())==0
 						&&events.retrive().getTime().compareTo(e.getTime())==0) {
 					System.out.println("-There is an event with same date & time!");
 					System.out.println("--------------------");	
@@ -298,7 +300,7 @@ public class Phonebook {
 				events.findNext();
 			}
 
-			if(events.retrive().getDate().compareToIgnoreCase(e.getDate())==0
+			if(events.retrive().getDate().compareTo(e.getDate())==0
 					&&events.retrive().getTime().compareTo(e.getTime())==0) {
 				System.out.println("-There is an event with same date & time!");
 				System.out.println("--------------------");	
