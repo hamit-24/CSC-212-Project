@@ -1,4 +1,24 @@
+/*
+CLASS: PhaseOne.java
 
+CSC212 Data structures - Project phase I
+
+Fall 2023
+
+EDIT DATE:
+
+17-10-2023
+
+TEAM:
+
+.next
+
+AUTHORS:
+
+Hamad allaeboon , (ID443100096)
+Abdullah alabdulkareem, (ID443102379)
+Mshari almuammar, (ID443101420)
+ */
 import java.util.*;
 public class Contact implements Comparable<Contact> {
 
@@ -95,8 +115,9 @@ public class Contact implements Comparable<Contact> {
 	}
 	
 	public void readContact() {
+		int day=40,month=40,year=0;;//just for check that the date is correct
 		Scanner input = new Scanner(System.in);
-		System.out.println("Enter the contact's name:");
+		System.out.print("Enter the contact's name: ");
 		this.name = input.nextLine();
 		this.name=name.toLowerCase();
         String[] parts = name.split(" ");    // Split the full name using a space as the delimiter.
@@ -105,15 +126,44 @@ public class Contact implements Comparable<Contact> {
         else
         	Firstname=name;
        
-		System.out.println("Enter the contact's phone number:");
+		System.out.print("Enter the contact's phone number: ");
 		this.pNumber= input.nextLine();
-		System.out.println("Enter the contact's email address:");
+		boolean isDigit=pNumber.matches("\\d+");//to check if number is all digit
+		boolean length10 =pNumber.length()!=10;// to check if number is 10 digits
+		while(!isDigit||length10) {
+			System.out.print("Enter correct phone number(10 digits without letter): ");
+			this.pNumber= input.nextLine();
+			isDigit=pNumber.matches("\\d+");
+			length10 =pNumber.length()!=10;
+		}
+		System.out.print("Enter the contact's email address: ");
 		this.email = input.nextLine();
-		System.out.println("Enter the contact's address:");
+		System.out.print("Enter the contact's address: ");
 		this.address = input.nextLine();
-		System.out.println("Enter the contact's birthday: dd/mm/yyyy");
-		this.BD = input.nextLine();
-		System.out.println("Enter any notes for the contact");
+		System.out.println("Enter the contact's birthday: ");
+		do {
+			try {
+				System.out.print("Enter the day:");
+				day=input.nextInt();
+				System.out.print("Enter the month:");
+				month=input.nextInt();
+				System.out.print("Enter the year:");
+				year=input.nextInt();
+			}catch (Exception e) {
+				System.out.println("-Invalid input. Please enter a valid day/month/year.");
+				System.out.println("--------------------");
+				input.nextLine();
+				continue;
+			}
+			if(day>31||month>12)
+				System.out.println("-Please enter day<32 or month<13");
+		}while(day>31||month>12);
+		BD = day+"/"+month+"/"+year;
+		input.nextLine();//garbage
+		
+		
+		
+		System.out.print("Enter any notes for the contact: ");
 		this.note = input.nextLine();
 
         

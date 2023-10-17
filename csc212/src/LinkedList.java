@@ -1,3 +1,24 @@
+/*
+CLASS: PhaseOne.java
+
+CSC212 Data structures - Project phase I
+
+Fall 2023
+
+EDIT DATE:
+
+17-10-2023
+
+TEAM:
+
+.next
+
+AUTHORS:
+
+Hamad allaeboon , (ID443100096)
+Abdullah alabdulkareem, (ID443102379)
+Mshari almuammar, (ID443101420)
+ */
 public class LinkedList <T extends Comparable<T>> {
 	private Node<T> head;
 	private Node<T> current;
